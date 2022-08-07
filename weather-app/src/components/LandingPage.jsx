@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Chart } from './barchart';
 import { useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 const LandingPage = (props) => {
-  const [searchLoading,setSearchLoading] = useState(false)
+  const [searchLoading, setSearchLoading] = useState(false);
   const [location, setLocation] = useState('');
   const [data, setData] = useState({});
   const [lat, setLat] = useState([]);
@@ -22,9 +22,9 @@ const LandingPage = (props) => {
       axios.get(url).then((response) => {
         console.log(response);
         setData(response.data);
-        setSearchLoading(!searchLoading)
+        setSearchLoading(!searchLoading);
       });
-       setLocation('');
+      setLocation('');
     }
   };
 
@@ -44,10 +44,9 @@ const LandingPage = (props) => {
       name: data.name,
       pressure: data.main.pressure,
       humidity: data.main.humidity,
-      sunrise:data.sys.sunrise,
-      sunset:data.sys.sunset
+      sunrise: data.sys.sunrise,
+      sunset: data.sys.sunset,
     };
-
 
     if (data.dt_txt) {
       mapped.dt_txt = data.dt_txt;
@@ -55,7 +54,6 @@ const LandingPage = (props) => {
 
     return mapped;
   };
- 
 
   const getWeather = async (lat, long) => {
     return fetch(dailytemp_url)
@@ -67,17 +65,18 @@ const LandingPage = (props) => {
         }
       });
   };
- 
-  const getForecast = async(lat,long) => {
-   return fetch(oneCallurl)
-   .then((response) => handleResponse(response))
-   .then((forecastData) => {
-   if (Object.entries(forecastData).length) {
-           setForecast(forecastData.hourly)
-              forecastData.hourly.map((e) => e.temp);
-          }
-   })
-  }
+
+  const getForecast = async (lat, long) => {
+    return fetch(oneCallurl)
+      .then((response) => handleResponse(response))
+      .then((forecastData) => {
+        if (Object.entries(forecastData).length) {
+          setForecast(forecastData.hourly);
+          console.log(forecastData);
+          forecastData.hourly.map((e) => e.temp);
+        }
+      });
+  };
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLat(position.coords.latitude);
@@ -93,7 +92,7 @@ const LandingPage = (props) => {
       .catch((err) => {
         setError(err.message);
       });
-    getForecast(lat,long)
+    getForecast(lat, long);
   }, [lat, long, error]);
 
   return (
@@ -104,11 +103,14 @@ const LandingPage = (props) => {
         onKeyPress={getData}
         placeholder="Enter City Name and press Enter"
         className="border rounded-lg p-4 w-96 ml-10 drop-shadow-md outline-none"
-     
       />
-     
-      <Chart Data={data} weatherData={weatherData} searchLoading = {searchLoading} loading={loading} forecast={forecast}/> 
-     
+      <Chart
+        Data={data}
+        weatherData={weatherData}
+        searchLoading={searchLoading}
+        loading={loading}
+        forecast={forecast}
+      />
     </div>
   );
 };
