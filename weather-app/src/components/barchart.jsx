@@ -25,36 +25,46 @@ ChartJS.register(
 
 const options = {
   responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
 };
 
-
-
 export function Chart(props) {
-
-  const { weatherData, loading ,forecast,Data,searchLoading} = props;
-  const labels = ['09', '10', '11', '12', '13', '14','15','16','09', '10', '11', '12', '13', '14','15','16','09', '10', '11', '12', '13', '14','15','16'];
- //const temp = ['11','31']
- const d = (forecast);
- console.log(d)
- const temp = d.map((element) =>
-  (element.temp)
-)
- //  console.log(tempq)
- //console.log(searchLoading)
+  const { weatherData, loading, forecast, Data, searchLoading } = props;
+  const labels = [
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+  ];
+  //const temp = ['11','31']
+  const d = forecast;
+  console.log(d);
+  const temp = d.map((element) => element.temp);
+  //  console.log(tempq)
+  //console.log(searchLoading)
   const data = {
     labels,
     datasets: [
       {
-        
         label: 'Temprature',
         data: temp,
         borderColor: 'rgb(53, 162, 235)',
@@ -65,35 +75,66 @@ export function Chart(props) {
 
   //const ac = d.map((e) => e.temp)
 
-
-  //	console.log(props)
+  const convert = (sec) => {
+    var date = new Date(sec * 1000);
+    var timestr = date.toLocaleTimeString();
+    return timestr.slice(0, 5);
+  };
   return (
     <>
       <div></div>
       {loading ? (
-        <div>
+        <div className="m-16 ml-48">
           <CircularIndeterminate />
         </div>
       ) : (
         <div>
-          <Line options={options} data={data} />
-     
-        <div>
-          <div>
-            <h1>{!searchLoading? weatherData.name:Data.name}</h1>
-          </div>
-          <div>
-            <h1>{!searchLoading? weatherData.temperature:((Data.main.temp-273.15).toFixed(0))}° C</h1>
-          </div>
-          <div>
-            <h1>{weatherData.description}</h1>
-          </div>
-          <p>{weatherData.pressure}</p>
-          <p>{weatherData.humidity}%</p>
-        </div>
-      
+          <div className=" border border-sky-500  w-48 flex p-5 m-10 drop-shadow-xl border-2 rounded-lg ">
+            <div>
+              <div className="text-xl font-bold">
+                <h1>{!searchLoading ? weatherData.name : Data.name}</h1>
+              </div>
+              <div className="text-2xl font-bold">
+                <p>
+                  {!searchLoading
+                    ? weatherData.temperature
+                    : (Data.main.temp - 273.15).toFixed(0)}
+                  ° C
+                </p>
+              </div>
+              <div>
+                <h1>{weatherData.description}</h1>
+              </div>
+            </div>
 
-</div>
+            <div></div>
+          </div>
+          <Line options={options} data={data} />
+
+          <div>
+            <div className="text-bold  flex place-content-between mt-4 ">
+              <div className="bg-blue-100 p-6 rounded-xl">
+                <b>Pressure</b>
+                <p>{weatherData.pressure}</p>
+              </div>
+              <div className="bg-blue-100 p-6 rounded-xl">
+                <b>Humidity</b>
+                <p>{weatherData.humidity}%</p>
+              </div>
+            </div>
+
+            <div className="text-bold  flex place-content-between mt-4">
+              <div className="bg-amber-300 p-7 rounded-xl">
+                <b>Sunrise</b>
+                <p>{convert(weatherData.sunrise)}</p>
+              </div>
+              <div className="bg-amber-300 p-8 rounded-xl">
+                <b>Sunset</b>
+                <p>{convert(weatherData.sunset)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

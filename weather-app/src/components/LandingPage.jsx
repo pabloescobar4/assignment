@@ -44,6 +44,8 @@ const LandingPage = (props) => {
       name: data.name,
       pressure: data.main.pressure,
       humidity: data.main.humidity,
+      sunrise:data.sys.sunrise,
+      sunset:data.sys.sunset
     };
 
 
@@ -95,14 +97,16 @@ const LandingPage = (props) => {
   }, [lat, long, error]);
 
   return (
-    <div className="LandingPage">
+    <div className="mt-4">
       <input
         value={location}
         onChange={(e) => setLocation(e.target.value)}
         onKeyPress={getData}
+        placeholder="Enter City Name"
+        className="border rounded-lg p-4 w-96 ml-10 drop-shadow-md outline-none"
      
       />
-      <button onClick={getData}>Search</button>
+     
       <Chart Data={data} weatherData={weatherData} searchLoading = {searchLoading} loading={loading} forecast={forecast}/> 
      
     </div>
