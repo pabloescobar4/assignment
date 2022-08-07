@@ -102,7 +102,7 @@ const LandingPage = (props) => {
         value={location}
         onChange={(e) => setLocation(e.target.value)}
         onKeyPress={getData}
-        placeholder="Enter City Name"
+        placeholder="Enter City Name and press Enter"
         className="border rounded-lg p-4 w-96 ml-10 drop-shadow-md outline-none"
      
       />

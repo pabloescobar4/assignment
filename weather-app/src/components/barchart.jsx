@@ -74,7 +74,7 @@ export function Chart(props) {
   };
 
   //const ac = d.map((e) => e.temp)
-
+console.log(Data)
   const convert = (sec) => {
     var date = new Date(sec * 1000);
     var timestr = date.toLocaleTimeString();
@@ -103,7 +103,7 @@ export function Chart(props) {
                 </p>
               </div>
               <div>
-                <h1>{weatherData.description}</h1>
+                <h1>{!searchLoading ? weatherData.description : Data.weather[0].main}</h1>
               </div>
             </div>
 
@@ -115,22 +115,22 @@ export function Chart(props) {
             <div className="text-bold  flex place-content-between mt-4 ">
               <div className="bg-blue-100 p-6 rounded-xl">
                 <b>Pressure</b>
-                <p>{weatherData.pressure}</p>
+                <p>{!searchLoading ? weatherData.pressure : Data.main.pressure}</p>
               </div>
               <div className="bg-blue-100 p-6 rounded-xl">
                 <b>Humidity</b>
-                <p>{weatherData.humidity}%</p>
+                <p>{!searchLoading ? weatherData.humidity : Data.main.humidity}%</p>
               </div>
             </div>
 
             <div className="text-bold  flex place-content-between mt-4">
               <div className="bg-amber-300 p-7 rounded-xl">
                 <b>Sunrise</b>
-                <p>{convert(weatherData.sunrise)}</p>
+                <p>{!searchLoading ? convert(weatherData.sunrise): convert(Data.sys.sunrise)}</p>
               </div>
               <div className="bg-amber-300 p-8 rounded-xl">
                 <b>Sunset</b>
-                <p>{convert(weatherData.sunset)}</p>
+                <p>{!searchLoading ? convert(weatherData.sunset): convert(Data.sys.sunset)}</p>
               </div>
             </div>
           </div>
