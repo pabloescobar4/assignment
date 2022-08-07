@@ -12,7 +12,7 @@ const LandingPage = (props) => {
   const [forecast, setForecast] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const key = '74ba08166cecccf3c400a28e990461f1';
+  const key = 'a8937c07459e87c8f5dbd0b8822cbdd6';
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}`;
   const dailytemp_url = `https://api.openweathermap.org/data/2.5/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${key}`;
   const oneCallurl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=current,minutelyalerts&units=metric&appid=${key}`;
@@ -72,7 +72,7 @@ const LandingPage = (props) => {
       .then((forecastData) => {
         if (Object.entries(forecastData).length) {
           setForecast(forecastData.hourly);
-          console.log(forecastData);
+         
           forecastData.hourly.map((e) => e.temp);
         }
       });

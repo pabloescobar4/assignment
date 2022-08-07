@@ -59,10 +59,18 @@ export function Chart(props) {
     '23',
     '24',
   ];
-
+  console.log(Data);
+  const convert = (sec) => {
+    var date = new Date(sec * 1000);
+    var timestr = date.toLocaleTimeString();
+    return timestr.slice(0, 5);
+  };
   const temp = forecast.map((element) => element.temp);
+  const time = forecast.map((element) => element.dt);
+  const convertedTime = (time.map((e)=> convert(e).slice(0,2))).slice(0,24)
+  console.log(convertedTime)
   const data = {
-    labels,
+    convertedTime,
     datasets: [
       {
         label: 'Temprature',
@@ -74,12 +82,7 @@ export function Chart(props) {
     ],
   };
 
-  console.log(Data);
-  const convert = (sec) => {
-    var date = new Date(sec * 1000);
-    var timestr = date.toLocaleTimeString();
-    return timestr.slice(0, 5);
-  };
+ 
   return (
     <>
       <div></div>
