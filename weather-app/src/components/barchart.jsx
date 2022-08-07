@@ -32,33 +32,7 @@ const options = {
 
 export function Chart(props) {
   const { weatherData, loading, forecast, Data, searchLoading } = props;
-  const labels = [
-    '00',
-    '01',
-    '02',
-    '03',
-    '04',
-    '05',
-    '06',
-    '07',
-    '08',
-    '09',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-    '24',
-  ];
+
   console.log(Data);
   const convert = (sec) => {
     var date = new Date(sec * 1000);
@@ -67,10 +41,9 @@ export function Chart(props) {
   };
   const temp = forecast.map((element) => element.temp);
   const time = forecast.map((element) => element.dt);
-  const convertedTime = (time.map((e)=> convert(e).slice(0,2))).slice(0,24)
-  console.log(convertedTime)
+  const labels = time.map((e) => convert(e).slice(0, 2)).slice(0, 24);
   const data = {
-    convertedTime,
+    labels,
     datasets: [
       {
         label: 'Temprature',
@@ -82,7 +55,6 @@ export function Chart(props) {
     ],
   };
 
- 
   return (
     <>
       <div></div>
